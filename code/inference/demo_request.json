@@ -1,0 +1,16 @@
+{
+  "model": "qwen3-32b-xlam-lora",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are a helpful assistant with access to the following functions. When the user asks something that requires calling a function, respond with a JSON object containing the function name and parameters.\n\nAvailable functions:\n[{\"name\": \"get_weather\", \"description\": \"Get the current weather for a location\", \"parameters\": {\"type\": \"object\", \"properties\": {\"location\": {\"type\": \"string\"}, \"unit\": {\"type\": \"string\", \"enum\": [\"celsius\", \"fahrenheit\"]}}, \"required\": [\"location\"]}}, {\"name\": \"search_flights\", \"description\": \"Search for available flights between two cities\", \"parameters\": {\"type\": \"object\", \"properties\": {\"origin\": {\"type\": \"string\"}, \"destination\": {\"type\": \"string\"}, \"date\": {\"type\": \"string\"}}, \"required\": [\"origin\", \"destination\", \"date\"]}}]"
+    },
+    {
+      "role": "user",
+      "content": "Find me a flight from Detroit to Amsterdam on July 3rd and check the weather there"
+    }
+  ],
+  "temperature": 0.0,
+  "max_tokens": 256,
+  "chat_template_kwargs": {"enable_thinking": false}
+}

@@ -1,0 +1,76 @@
+{
+  "description": "20 function-calling test prompts for base-vs-finetuned comparison",
+  "tools": [
+    {
+      "name": "get_weather",
+      "description": "Get the current weather for a location",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "location": {"type": "string", "description": "City and state, e.g. San Francisco, CA"},
+          "unit": {"type": "string", "enum": ["celsius", "fahrenheit"]}
+        },
+        "required": ["location"]
+      }
+    },
+    {
+      "name": "search_flights",
+      "description": "Search for available flights between two cities",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "origin": {"type": "string"},
+          "destination": {"type": "string"},
+          "date": {"type": "string", "format": "date"}
+        },
+        "required": ["origin", "destination", "date"]
+      }
+    },
+    {
+      "name": "send_email",
+      "description": "Send an email to a recipient",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "to": {"type": "string", "format": "email"},
+          "subject": {"type": "string"},
+          "body": {"type": "string"}
+        },
+        "required": ["to", "subject", "body"]
+      }
+    },
+    {
+      "name": "calculate",
+      "description": "Perform a mathematical calculation",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "expression": {"type": "string"}
+        },
+        "required": ["expression"]
+      }
+    }
+  ],
+  "prompts": [
+    {"id": 1, "category": "single-call", "user": "What is the weather like in Detroit right now?"},
+    {"id": 2, "category": "single-call", "user": "Find me flights from Detroit to New York on December 15th"},
+    {"id": 3, "category": "single-call", "user": "What is 1247 multiplied by 33?"},
+    {"id": 4, "category": "single-call", "user": "Send an email to alexei@nebius.com with subject Demo and body Looking forward to it"},
+    {"id": 5, "category": "multi-call", "user": "Check the weather in Paris and Tokyo, then tell me which is warmer"},
+    {"id": 6, "category": "ambiguous", "user": "What's the temperature?"},
+    {"id": 7, "category": "no-call-needed", "user": "What is the capital of France?"},
+    {"id": 8, "category": "single-call", "user": "Find flights from SFO to JFK tomorrow"},
+    {"id": 9, "category": "single-call", "user": "Whats 250 plus 175 minus 30"},
+    {"id": 10, "category": "single-call", "user": "Weather in Seattle in fahrenheit please"},
+    {"id": 11, "category": "multi-call", "user": "Email mom@example.com with subject Hi and tell her I'll be there at 6pm. Also check the weather in Chicago."},
+    {"id": 12, "category": "ambiguous", "user": "Book me a flight"},
+    {"id": 13, "category": "no-call-needed", "user": "Who wrote Hamlet?"},
+    {"id": 14, "category": "single-call", "user": "Compute the square root of 144"},
+    {"id": 15, "category": "single-call", "user": "Whats the forecast for Austin TX"},
+    {"id": 16, "category": "multi-call", "user": "Find flights from BOS to MIA on Dec 20 and email me the results at me@example.com"},
+    {"id": 17, "category": "edge-case", "user": "Calculate 0/0"},
+    {"id": 18, "category": "single-call", "user": "Send a quick note to team@example.com about the meeting being moved to 3pm"},
+    {"id": 19, "category": "single-call", "user": "What is 2^32"},
+    {"id": 20, "category": "no-call-needed", "user": "Tell me a joke"}
+  ]
+}
