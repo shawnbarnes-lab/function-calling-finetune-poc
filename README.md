@@ -16,7 +16,8 @@ model behavior under identical inference conditions.
 | Compute | 2 GPU worker nodes |
 | GPUs | 16x NVIDIA H200 (8 per node) |
 | Interconnect | InfiniBand |
-| Shared storage | 1 TB filesystem |
+| Shared filesystem | 1 TB cluster jail (`filestore_jail`), mounted on every node |
+| SSD network disk | 1 TB on `NETWORK_SSD_IO_M3` (`nfs_in_k8s`), mounted at `/home` |
 | Monitoring | Nebius console, Grafana, DCGM |
 | Inference | vLLM endpoints for base and fine-tuned models |
 
@@ -38,6 +39,22 @@ model behavior under identical inference conditions.
 The primary outcome was improved function-call validity under inference. Token
 accuracy is included as a training signal, but endpoint behavior is the more
 relevant measure for agent-oriented workloads.
+
+## Storage layout
+
+The assignment calls for both a 1 TB SSD network disk and a 1 TB shared
+filesystem. Both are provisioned in
+[`code/terraform/terraform.tfvars`](code/terraform/terraform.tfvars):
+
+**1 TB shared filesystem** — the cluster jail (`filestore_jail`,
+`size_gibibytes = 1024`), mounted on the controller, worker, and login nodes.
+Holds the dataset, training checkpoints, and the trained LoRA adapter.
+
+**1 TB SSD network disk** — an NFS share backed by a `NETWORK_SSD_IO_M3` disk
+(`nfs_in_k8s`, `size_gibibytes = 1023`, ext4), mounted at `/home` across the
+cluster. It is sized at 1023 GiB rather than 1024 because `NETWORK_SSD_IO_M3`
+capacity must be a multiple of 93 GiB, so 1023 (= 11 x 93) is the nearest
+1 TB-class value.
 
 ## Repo layout
 
